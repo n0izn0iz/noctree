@@ -2,10 +2,15 @@
   "name": "noctree",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./js/test.js",
+    "install_node-glfw": "./scripts/install_node_glfw.sh",
+    "start": "node ./js/main.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node-glfw": "^0.4.6",
+    "node-webgl": "^0.5.5"
+  }
 }
