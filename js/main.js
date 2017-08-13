@@ -1,16 +1,16 @@
 "use strict";
-const WebGL = require("node-webgl");
-const initGL = require("./initGL");
-const initShaders = require("./initShaders");
-const initBuffers = require("./initBuffers");
-const initWireframeCubeBuffer = require("./initWireframeCubeBuffer");
-const initAntTweakBar = require("./initAntTweakBar");
-const initKeys = require("./initInput");
-const tick = require("./tick");
-const Camera = require("./Camera");
-const Vector3 = require("./Vector3");
-const Octree = require("./Octree");
-const constants = require("./constants");
+import WebGL from "node-webgl";
+import initGL from "./initGL";
+import initShaders from "./initShaders";
+import initBuffers from "./initBuffers";
+import initWireframeCubeBuffer from "./initWireframeCubeBuffer";
+import initAntTweakBar from "./initAntTweakBar";
+import initKeys from "./initInput";
+import tick from "./tick";
+import Camera from "./Camera";
+import Vector3 from "./Vector3";
+import Octree from "./Octree";
+import constants from "./constants";
 
 const document = WebGL.document();
 
@@ -21,27 +21,25 @@ const log = console.log;
 
 const octree = new Octree();
 
-const entityTypes = ["terrain", "entity"].reduce(
-  (result, key, index) => Object.defineProperty(result, key, { value: index }),
-  {}
-);
-
+import entityTypes from "./entityTypes";
 console.log("entityTypes", entityTypes);
 
 const terrainBlock = {
   type: entityTypes.terrain,
-  size: constants.worldSize / 2,
+  size: octree.size / 2,
   position: {
-    x: 0,
-    y: 0,
-    z: -(constants.worldSize / 4)
+    x: -(octree.size / 4),
+    y: -(octree.size / 4),
+    z: -(octree.size / 4)
   }
 };
 
 console.log("terrainBlock", terrainBlock);
 
+octree.insertEntity(terrainBlock);
+
 const createCube = ({ x, y, z }, octree) => {
-  const cube = { type: entityTypes.entity, position: { x, y, z } };
+  const cube = { type: entityTypes.cube, position: { x, y, z } };
   try {
     octree.insertEntity(cube);
   } catch (error) {
@@ -74,6 +72,23 @@ const inputState = {
 };
 initKeys(document, gl, ATB, inputState);
 
+const renderContext = {
+  gl,
+  ATB,
+  camera,
+  programs: {
+    basic: shaderProgram
+  },
+  models: {
+    cube: initBuffers(gl, log),
+    wireframeCube: initWireframeCubeBuffer(gl, log)
+  },
+  renderers: {
+    terrain: () => {},
+    cube: () => {}
+  }
+};
+
 gl.clearColor(255, 0, 0, 1);
 gl.enable(gl.DEPTH_TEST);
 
@@ -82,14 +97,13 @@ tick(
   ATB,
   gl,
   shaderProgram,
-  initBuffers(gl, log),
-  initWireframeCubeBuffer(gl, log),
   vars,
   document.requestAnimationFrame,
   camera,
   inputState,
   boundedCreateCube,
-  octree
+  octree,
+  renderContext
 );
 
 /*

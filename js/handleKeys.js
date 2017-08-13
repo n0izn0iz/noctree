@@ -1,8 +1,8 @@
 "use strict";
-const keys = require("./constants").keys;
+import { keys } from "./constants";
 const speed = 0.02;
 const mouseSpeed = 0.1;
-const Vector3 = require("./Vector3");
+import Vector3 from "./Vector3";
 
 const convertVector = array => new Vector3(array[0], array[1], array[2]);
 

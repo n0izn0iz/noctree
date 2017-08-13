@@ -1,5 +1,5 @@
 "use strict";
-const fs = require("fs");
+import fs from "fs";
 
 var shaders = {
   "shader-fs": fs.readFileSync(__dirname + "/../shaders/basic.frag").toString(),

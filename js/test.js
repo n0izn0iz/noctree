@@ -1,6 +1,6 @@
 "use strict";
 #!/usr/bin/node
-const Octree = require("./js/Octree");
+import Octree from "./js/Octree";
 
 const octree = new Octree();
 

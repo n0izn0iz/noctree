@@ -1,6 +1,6 @@
 "use strict";
-const drawScene = require("./drawScene");
-const handleKeys = require("./handleKeys");
+import drawScene from "./drawScene";
+import handleKeys from "./handleKeys";
 
 const animate = (timeNow, vars) => {
   if (!timeNow) return; // first time, timeNow may be undefined
@@ -43,16 +43,15 @@ const tick = (
   ATB,
   gl,
   shaderProgram,
-  cube,
-  wireframeCube,
   vars,
   requestAnimationFrame,
   camera,
   inputState,
   createCube,
-  octree
+  octree,
+  renderContext
 ) => {
-  drawScene(gl, shaderProgram, cube, wireframeCube, vars, camera, octree);
+  drawScene(vars, octree, renderContext);
   animate(timeNow, vars);
 
   drawATB(ATB, gl, shaderProgram);
@@ -68,14 +67,13 @@ const tick = (
         ATB,
         gl,
         shaderProgram,
-        cube,
-        wireframeCube,
         vars,
         requestAnimationFrame,
         camera,
         inputState,
         createCube,
-        octree
+        octree,
+        renderContext
       ),
     0
   );

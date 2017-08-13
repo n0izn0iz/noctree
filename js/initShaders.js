@@ -1,5 +1,5 @@
 "use strict";
-const getShader = require("./getShader");
+import getShader from "./getShader";
 
 module.exports = (gl, log) => {
   log("init GL shaders");

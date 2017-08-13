@@ -9,9 +9,9 @@ ___|___ +90 phi
 const degCircle = 360;
 const degHalfCircle = degCircle / 2;
 const degQuarterCircle = degHalfCircle / 2;
-const degToRad = require("./degToRad");
-const Vector3 = require("./Vector3");
-const geometry = require("./glMatrix-0.9.5.min.js");
+import degToRad from "./degToRad";
+import Vector3 from "./Vector3";
+import geometry from "./glMatrix-0.9.5.min.js";
 const vec3 = geometry.vec3;
 const mat4 = geometry.mat4;
 

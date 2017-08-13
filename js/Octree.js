@@ -1,6 +1,6 @@
 "use strict";
-const constants = require("./constants");
-const Vector3 = require("./Vector3");
+import constants from "./constants";
+import Vector3 from "./Vector3";
 
 /*
 Octree space

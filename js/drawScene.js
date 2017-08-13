@@ -1,18 +1,56 @@
 "use strict";
-const drawCube = require("./drawCube");
-const drawOctree = require("./drawOctree");
-const geometry = require("./glMatrix-0.9.5.min.js");
+import drawCube from "./drawCube";
+import drawOctree from "./drawOctree";
+import geometry from "./glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
+import entityTypes from "./entityTypes";
+import drawTerrainBlock from "./drawTerrainBlock";
 
-module.exports = (
-  gl,
-  shaderProgram,
-  cube,
-  wireframeCube,
-  { xRot, yRot, z },
-  camera,
-  octree
-) => {
+const renderers = {
+  [entityTypes.terrain]: (
+    terrain,
+    xRot,
+    yRot,
+    gl,
+    shaderProgram,
+    cube,
+    wireframeCube,
+    perspectiveMatrix,
+    camMatrix
+  ) =>
+    drawTerrainBlock(
+      terrain,
+      wireframeCube,
+      gl,
+      shaderProgram,
+      perspectiveMatrix,
+      camMatrix
+    ),
+  [entityTypes.cube]: (
+    entity,
+    xRot,
+    yRot,
+    gl,
+    shaderProgram,
+    cube,
+    wireframeCube,
+    perspectiveMatrix,
+    camMatrix
+  ) =>
+    drawCube(
+      entity.position,
+      xRot,
+      yRot,
+      gl,
+      shaderProgram,
+      cube,
+      perspectiveMatrix,
+      camMatrix
+    )
+};
+
+module.exports = ({ xRot, yRot, z }, octree, renderContext) => {
+  const gl = renderContext.gl;
   gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -26,16 +64,17 @@ module.exports = (
     perspectiveMatrix
   );
 
-  const camMatrix = camera.getMatrix();
+  const camMatrix = renderContext.camera.getMatrix();
 
-  octree.forEachEntity(({ position }) =>
-    drawCube(
-      position,
+  octree.forEachEntity(entity =>
+    renderers[entity.type](
+      entity,
       xRot,
       yRot,
       gl,
-      shaderProgram,
-      cube,
+      renderContext.programs.basic,
+      renderContext.models.cube,
+      renderContext.models.wireframeCube,
       perspectiveMatrix,
       camMatrix
     )
@@ -43,9 +82,9 @@ module.exports = (
 
   drawOctree(
     octree,
-    wireframeCube,
+    renderContext.models.wireframeCube,
     gl,
-    shaderProgram,
+    renderContext.programs.basic,
     perspectiveMatrix,
     camMatrix
   );

@@ -1,27 +1,29 @@
 "use strict";
+import setMatrixUniforms from "./setMatrixUniforms";
 import geometry from "./glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
-import degToRad from "./degToRad";
-import setMatrixUniforms from "./setMatrixUniforms";
 
 module.exports = (
-  position,
-  xRot,
-  yRot,
+  terrain,
+  cube,
   gl,
   shaderProgram,
-  cube,
   perspectiveMatrix,
   camMatrix
 ) => {
   const worldMatrix = mat4.create();
+  const cubeModelSize = 2;
 
   mat4.identity(worldMatrix);
 
-  mat4.translate(worldMatrix, [position.x, position.y, position.z]);
+  mat4.translate(worldMatrix, [
+    terrain.position.x,
+    terrain.position.y,
+    terrain.position.z
+  ]);
 
-  mat4.rotate(worldMatrix, degToRad(xRot), [1, 0, 0]);
-  mat4.rotate(worldMatrix, degToRad(yRot), [0, 1, 0]);
+  const scaleSize = terrain.size / cubeModelSize;
+  mat4.scale(worldMatrix, [scaleSize, scaleSize, scaleSize]);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertexPositionBuffer);
   gl.vertexAttribPointer(
@@ -58,7 +60,7 @@ module.exports = (
   );
 
   gl.drawElements(
-    gl.TRIANGLES,
+    gl.LINES,
     cube.vertexIndexBuffer.numItems,
     gl.UNSIGNED_SHORT,
     0

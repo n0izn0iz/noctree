@@ -5,12 +5,16 @@
   "scripts": {
     "test": "node ./js/test.js",
     "install_node-glfw": "./scripts/install_node_glfw.sh",
-    "start": "node ./js/main.js"
+    "start": "babel-node ./js/main.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.24.1",
     "node-glfw": "^0.4.6",
     "node-webgl": "^0.5.5"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1"
   }
 }

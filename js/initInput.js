@@ -1,5 +1,5 @@
 "use strict";
-const GLFW = require("node-glfw");
+import GLFW from "node-glfw";
 
 module.exports = (document, gl, ATB, inputState) => {
   let firtTime = true;

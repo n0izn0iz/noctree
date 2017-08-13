@@ -1,5 +1,5 @@
 "use strict";
-const degToRad = require("./degToRad");
+import degToRad from "./degToRad";
 
 module.exports = (ATB, canvas, log, vars) => {
   log("init AntTweakBar");
