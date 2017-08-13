@@ -2,17 +2,17 @@
 import drawScene from "./drawScene";
 import handleKeys from "./handleKeys";
 
-const animate = (timeNow, vars) => {
+const animate = (timeNow, state) => {
   if (!timeNow) return; // first time, timeNow may be undefined
 
-  if (vars.lastTime != 0) {
-    var elapsed = timeNow - vars.lastTime;
-    vars.fps = Math.round(1000 / elapsed);
+  if (state.lastTime != 0) {
+    var elapsed = timeNow - state.lastTime;
+    state.fps = Math.round(1000 / elapsed);
 
-    vars.xRot += vars.xSpeed * elapsed / 1000.0;
-    vars.yRot += vars.ySpeed * elapsed / 1000.0;
+    state.xRot += state.xSpeed * elapsed / 1000.0;
+    state.yRot += state.ySpeed * elapsed / 1000.0;
   }
-  vars.lastTime = timeNow;
+  state.lastTime = timeNow;
 };
 
 /* Before calling AntTweakBar or any other library that could use programs,
@@ -32,48 +32,39 @@ const disableProgram = (gl, shaderProgram) => {
   gl.useProgram(null);
 };
 
-const drawATB = (ATB, gl, shaderProgram) => {
-  disableProgram(gl, shaderProgram);
+const drawATB = ({ ATB, gl, programs }) => {
+  disableProgram(gl, programs.basic);
   ATB.Draw();
-  enableProgram(gl, shaderProgram);
+  enableProgram(gl, programs.basic);
+};
+
+const render = (state, timeNow, renderContext) => {
+  drawScene(state, renderContext);
+  drawATB(renderContext);
+  renderContext.gl.finish(); // for timing
 };
 
 const tick = (
   timeNow,
-  ATB,
-  gl,
-  shaderProgram,
-  vars,
-  requestAnimationFrame,
-  camera,
+  state,
   inputState,
-  createCube,
-  octree,
-  renderContext
+  actions,
+  renderContext,
+  requestAnimationFrame
 ) => {
-  drawScene(vars, octree, renderContext);
-  animate(timeNow, vars);
-
-  drawATB(ATB, gl, shaderProgram);
-
-  gl.finish(); // for timing
-
-  handleKeys(inputState, { camera, createCube });
+  render(state, timeNow, renderContext);
+  handleKeys(inputState, actions);
+  animate(timeNow, state);
 
   requestAnimationFrame(
     timeNow =>
       tick(
         timeNow,
-        ATB,
-        gl,
-        shaderProgram,
-        vars,
-        requestAnimationFrame,
-        camera,
+        state,
         inputState,
-        createCube,
-        octree,
-        renderContext
+        actions,
+        renderContext,
+        requestAnimationFrame
       ),
     0
   );

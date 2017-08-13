@@ -20,12 +20,12 @@ x- <____|/_________|/ ____> x+
    y-   z-
 */
 
-const east = new Vector3({ x: 1 });
-const west = east.invert();
-const north = new Vector3({ y: 1 });
-const south = north.invert();
-const top = new Vector3({ z: 1 });
-const bottom = top.invert();
+export const east = new Vector3({ x: 1 });
+export const west = east.invert();
+export const north = new Vector3({ y: 1 });
+export const south = north.invert();
+export const top = new Vector3({ z: 1 });
+export const bottom = top.invert();
 
 const cardinalVectors = {
   east,
@@ -115,17 +115,18 @@ class Octree {
       this.entities.push(entity);
       /*if (this.size / 2 >= constants.minSize)*/ this.checkDivide();
     } else {
-      let success = false;
-      this.childs.forEach(child => {
+      let lastError = "Unknown error";
+      let i;
+      for (i = 0; i < this.childs.length; i++) {
         try {
-          child.insertEntity(entity);
-          if (success === true) throw "Inserted entity twice!";
-          success = true;
+          this.childs[i].insertEntity(entity);
+          break;
         } catch (error) {
-          if (error === "Inserted entity twice!") throw error;
+          lastError = error;
         }
-      });
-      if (!success) throw "Failed to pass entity";
+      }
+      if (i === this.childs.length)
+        throw "Failed to pass entity, last error: " + lastError;
     }
   }
 
@@ -149,17 +150,20 @@ class Octree {
   }
 
   divide() {
+    let lastError = "Unknown error";
     this.childs = Array.apply(null, Array(octo)).map((element, direction) => {
       const child = new Octree({
         parent: this,
         direction: direction
       });
-      this.passEntities(direction, child);
+      lastError = this.passEntities(direction, child);
       return child;
     });
-    if (this.childs.length <= 0) throw "Failed to divide";
-    if (this.entities.length > 0) throw "Failed to pass entity/ies to childs";
-    this.entities = null;
+    if (this.childs.length <= 0)
+      throw "Failed to divide, last error" + lastError;
+    else if (this.entities.length > 0)
+      throw "Failed to pass entity/ies to childs, last error: " + lastError;
+    else this.entities = null;
   }
 
   isRoot() {
@@ -175,12 +179,16 @@ class Octree {
   }
 
   passEntities(direction, node) {
+    let lastError = "Unknown error";
     this.entities.forEach((entity, index) => {
       try {
-        node.insertEntity(entity);
         this.entities.splice(this.entities.indexOf(entity), 1);
-      } catch (error) {}
+        node.insertEntity(entity);
+      } catch (error) {
+        lastError = error;
+      }
     });
+    return lastError;
   }
 
   getChildPosition(direction) {

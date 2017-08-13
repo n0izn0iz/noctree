@@ -1,4 +1,7 @@
 "use strict";
+
+const square = number => Math.pow(number, 2);
+
 class Vector3 {
   constructor(x, y, z) {
     if (typeof x === "object") {
@@ -46,6 +49,14 @@ class Vector3 {
 
   invert() {
     return new Vector3(-this.x, -this.y, -this.z);
+  }
+
+  length() {
+    return Math.sqrt(square(this.x) + square(this.y) + square(this.z));
+  }
+
+  normalize() {
+    return this.dividedByScalar(this.length());
   }
 
   /*toString() {

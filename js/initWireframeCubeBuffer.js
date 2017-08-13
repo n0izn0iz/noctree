@@ -12,9 +12,9 @@
 -1,-1,-1________1,-1,-1
 4               7
 */
-export default (gl, log) => {
+export default gl => {
   const cube = {};
-  log("init Wireframe Cube Buffer");
+  console.log("init Wireframe Cube Buffer");
 
   const vertices = [
     // Front face

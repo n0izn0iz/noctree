@@ -5,14 +5,12 @@ const mat4 = geometry.mat4;
 
 export default (
   terrain,
-  cube,
-  gl,
-  shaderProgram,
-  perspectiveMatrix,
-  camMatrix
+  { gl, programs, models, perspectiveMatrix, cameraMatrix }
 ) => {
   const worldMatrix = mat4.create();
   const cubeModelSize = 2;
+  const cube = models.wireframeCube;
+  const shaderProgram = programs.basic;
 
   mat4.identity(worldMatrix);
 
@@ -55,7 +53,7 @@ export default (
     gl,
     shaderProgram,
     perspectiveMatrix,
-    camMatrix,
+    cameraMatrix,
     worldMatrix
   );
 

@@ -1,7 +1,7 @@
 "use strict";
-export default (gl, log) => {
+export default gl => {
   const cube = {};
-  log("init GL buffers");
+  console.log("init GL buffers");
   const vertices = [
     // Front face
     -1.0,

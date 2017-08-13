@@ -11,6 +11,10 @@ export const keys = {
   }
 };
 
+export const degCircle = 360;
+export const degHalfCircle = degCircle / 2;
+export const degQuarterCircle = degHalfCircle / 2;
+
 export default {
   defaultSize: 128,
   maxEntitiesPerNode: 8,

@@ -5,16 +5,14 @@ const mat4 = geometry.mat4;
 
 export default (
   octree,
-  cube,
-  gl,
-  shaderProgram,
-  perspectiveMatrix,
-  camMatrix
+  { gl, models, programs, cameraMatrix, perspectiveMatrix }
 ) => {
   octree.forEachNode(node => {
     if (node.isLeaf() && (!node.entities || node.entities.length <= 0)) return;
     const worldMatrix = mat4.create();
     const cubeModelSize = 2;
+    const cube = models.wireframeCube;
+    const shaderProgram = programs.basic;
 
     mat4.identity(worldMatrix);
 
@@ -57,7 +55,7 @@ export default (
       gl,
       shaderProgram,
       perspectiveMatrix,
-      camMatrix,
+      cameraMatrix,
       worldMatrix
     );
 

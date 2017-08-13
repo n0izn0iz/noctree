@@ -5,89 +5,37 @@ import geometry from "./glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
 import entityTypes from "./entityTypes";
 import drawTerrainBlock from "./drawTerrainBlock";
+import { getCameraMatrix } from "./Camera";
 
 const renderers = {
-  [entityTypes.terrain]: (
-    terrain,
-    xRot,
-    yRot,
-    gl,
-    shaderProgram,
-    cube,
-    wireframeCube,
-    perspectiveMatrix,
-    camMatrix
-  ) =>
-    drawTerrainBlock(
-      terrain,
-      wireframeCube,
-      gl,
-      shaderProgram,
-      perspectiveMatrix,
-      camMatrix
-    ),
-  [entityTypes.cube]: (
-    entity,
-    xRot,
-    yRot,
-    gl,
-    shaderProgram,
-    cube,
-    wireframeCube,
-    perspectiveMatrix,
-    camMatrix
-  ) =>
-    drawCube(
-      entity.position,
-      xRot,
-      yRot,
-      gl,
-      shaderProgram,
-      cube,
-      perspectiveMatrix,
-      camMatrix
-    )
+  [entityTypes.terrain]: drawTerrainBlock,
+  [entityTypes.cube]: drawCube
 };
 
-export default ({ xRot, yRot, z }, octree, renderContext) => {
+export default (state, renderContext) => {
   const gl = renderContext.gl;
   gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  const perspectiveMatrix = mat4.create();
+  renderContext.perspectiveMatrix = mat4.create();
+  renderContext.cameraMatrix = getCameraMatrix(
+    state.observer.position,
+    state.observer.orientation
+  );
 
   mat4.perspective(
     45,
     gl.viewportWidth / gl.viewportHeight,
     0.1,
     100.0,
-    perspectiveMatrix
+    renderContext.perspectiveMatrix
   );
 
-  const camMatrix = renderContext.camera.getMatrix();
-
-  octree.forEachEntity(entity =>
-    renderers[entity.type](
-      entity,
-      xRot,
-      yRot,
-      gl,
-      renderContext.programs.basic,
-      renderContext.models.cube,
-      renderContext.models.wireframeCube,
-      perspectiveMatrix,
-      camMatrix
-    )
+  state.octree.forEachEntity(entity =>
+    renderers[entity.type](entity, renderContext, state)
   );
 
-  drawOctree(
-    octree,
-    renderContext.models.wireframeCube,
-    gl,
-    renderContext.programs.basic,
-    perspectiveMatrix,
-    camMatrix
-  );
+  drawOctree(state.octree, renderContext);
 
   // cleanup GL state
   gl.bindBuffer(gl.ARRAY_BUFFER, null);

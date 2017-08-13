@@ -5,16 +5,13 @@ import degToRad from "./degToRad";
 import setMatrixUniforms from "./setMatrixUniforms";
 
 export default (
-  position,
-  xRot,
-  yRot,
-  gl,
-  shaderProgram,
-  cube,
-  perspectiveMatrix,
-  camMatrix
+  { position },
+  { gl, programs, models, cameraMatrix, perspectiveMatrix },
+  { xRot, yRot }
 ) => {
   const worldMatrix = mat4.create();
+  const shaderProgram = programs.basic;
+  const cube = models.cube;
 
   mat4.identity(worldMatrix);
 
@@ -53,7 +50,7 @@ export default (
     gl,
     shaderProgram,
     perspectiveMatrix,
-    camMatrix,
+    cameraMatrix,
     worldMatrix
   );
 
