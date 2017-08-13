@@ -1,3 +1,4 @@
+"use strict";
 const drawScene = require("./drawScene");
 const handleKeys = require("./handleKeys");
 

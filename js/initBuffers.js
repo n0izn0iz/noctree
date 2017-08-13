@@ -1,7 +1,8 @@
+"use strict";
 module.exports = (gl, log) => {
   const cube = {};
   log("init GL buffers");
-  vertices = [
+  const vertices = [
     // Front face
     -1.0,
     -1.0,
@@ -198,7 +199,7 @@ module.exports = (gl, log) => {
 
   let generatedColors = [];
 
-  for (j = 0; j < 6; j++) {
+  for (let j = 0; j < 6; j++) {
     const c = colors[j];
 
     for (let i = 0; i < 4; i++) {

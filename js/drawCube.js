@@ -1,6 +1,6 @@
-//Read and eval library
-fs = require("fs");
-eval(fs.readFileSync(__dirname + "/glMatrix-0.9.5.min.js", "utf8"));
+"use strict";
+const geometry = require("./glMatrix-0.9.5.min.js");
+const mat4 = geometry.mat4;
 const degToRad = require("./degToRad");
 const setMatrixUniforms = require("./setMatrixUniforms");
 

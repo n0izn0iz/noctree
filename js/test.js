@@ -1,3 +1,4 @@
+"use strict";
 #!/usr/bin/node
 const Octree = require("./js/Octree");
 

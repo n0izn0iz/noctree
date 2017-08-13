@@ -1,3 +1,4 @@
+"use strict";
 const constants = {
   defaultSize: 128,
   maxEntitiesPerNode: 8,

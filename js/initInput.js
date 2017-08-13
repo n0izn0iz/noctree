@@ -1,3 +1,4 @@
+"use strict";
 const GLFW = require("node-glfw");
 
 module.exports = (document, gl, ATB, inputState) => {
@@ -26,8 +27,7 @@ module.exports = (document, gl, ATB, inputState) => {
     },
     mousedown: () => (inputState.mouseClick = true)
   };
-  Object.keys(eventHandlers).forEach(key => {
-    console.log("addding event", key, eventHandlers[key]);
-    document.on(key, eventHandlers[key]);
-  });
+  Object.keys(eventHandlers).forEach(key =>
+    document.on(key, eventHandlers[key])
+  );
 };

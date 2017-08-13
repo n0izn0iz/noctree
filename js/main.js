@@ -1,6 +1,4 @@
-//Read and eval library
-const fs = require("fs");
-eval(fs.readFileSync(__dirname + "/glMatrix-0.9.5.min.js", "utf8"));
+"use strict";
 const WebGL = require("node-webgl");
 const initGL = require("./initGL");
 const initShaders = require("./initShaders");
@@ -12,6 +10,7 @@ const tick = require("./tick");
 const Camera = require("./Camera");
 const Vector3 = require("./Vector3");
 const Octree = require("./Octree");
+const constants = require("./constants");
 
 const document = WebGL.document();
 
@@ -22,14 +21,15 @@ const log = console.log;
 
 const octree = new Octree();
 
-const entityTypes = ["terrain", "entity"].reduce((result, key, index) => {
-  result[key] = index;
-}, {});
+const entityTypes = ["terrain", "entity"].reduce(
+  (result, key, index) => Object.defineProperty(result, key, { value: index }),
+  {}
+);
 
 console.log("entityTypes", entityTypes);
 
 const terrainBlock = {
-  type: "terrain",
+  type: entityTypes.terrain,
   size: constants.worldSize / 2,
   position: {
     x: 0,
@@ -41,7 +41,7 @@ const terrainBlock = {
 console.log("terrainBlock", terrainBlock);
 
 const createCube = ({ x, y, z }, octree) => {
-  const cube = { type: "entity", position: { x, y, z } };
+  const cube = { type: entityTypes.entity, position: { x, y, z } };
   try {
     octree.insertEntity(cube);
   } catch (error) {

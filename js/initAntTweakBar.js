@@ -1,3 +1,4 @@
+"use strict";
 const degToRad = require("./degToRad");
 
 module.exports = (ATB, canvas, log, vars) => {

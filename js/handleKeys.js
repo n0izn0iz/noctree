@@ -1,3 +1,4 @@
+"use strict";
 const keys = require("./constants").keys;
 const speed = 0.02;
 const mouseSpeed = 0.1;

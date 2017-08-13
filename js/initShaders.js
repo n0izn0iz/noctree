@@ -1,3 +1,4 @@
+"use strict";
 const getShader = require("./getShader");
 
 module.exports = (gl, log) => {

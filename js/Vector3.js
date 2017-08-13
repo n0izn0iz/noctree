@@ -1,3 +1,4 @@
+"use strict";
 class Vector3 {
   constructor(x, y, z) {
     if (typeof x === "object") {

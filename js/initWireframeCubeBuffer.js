@@ -1,3 +1,4 @@
+"use strict";
 /*
 -1,1,1__________1,1,1
 3               2
@@ -15,7 +16,7 @@ module.exports = (gl, log) => {
   const cube = {};
   log("init Wireframe Cube Buffer");
 
-  vertices = [
+  const vertices = [
     // Front face
     -1.0,
     -1.0,
@@ -65,7 +66,7 @@ module.exports = (gl, log) => {
     [1.0, 1.0, 1.0, 0.5] // Left face: purple
   ];
   let generatedColors = [];
-  for (j = 0; j < 6; j++) {
+  for (let j = 0; j < 6; j++) {
     const c = colors[j];
 
     for (let i = 0; i < 4; i++) {

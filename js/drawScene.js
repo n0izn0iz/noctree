@@ -1,9 +1,8 @@
+"use strict";
 const drawCube = require("./drawCube");
 const drawOctree = require("./drawOctree");
-
-//Read and eval library
-fs = require("fs");
-eval(fs.readFileSync(__dirname + "/glMatrix-0.9.5.min.js", "utf8"));
+const geometry = require("./glMatrix-0.9.5.min.js");
+const mat4 = geometry.mat4;
 
 module.exports = (
   gl,
