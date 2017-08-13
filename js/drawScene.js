@@ -9,6 +9,7 @@ module.exports = (
   gl,
   shaderProgram,
   cube,
+  wireframeCube,
   { xRot, yRot, z },
   camera,
   octree
@@ -41,7 +42,14 @@ module.exports = (
     )
   );
 
-  drawOctree(octree, cube, gl, shaderProgram, perspectiveMatrix, camMatrix);
+  drawOctree(
+    octree,
+    wireframeCube,
+    gl,
+    shaderProgram,
+    perspectiveMatrix,
+    camMatrix
+  );
 
   // cleanup GL state
   gl.bindBuffer(gl.ARRAY_BUFFER, null);

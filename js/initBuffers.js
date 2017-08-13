@@ -196,12 +196,12 @@ module.exports = (gl, log) => {
     [1.0, 0.0, 1.0, 0.5] // Left face: purple
   ];
 
-  var generatedColors = [];
+  let generatedColors = [];
 
   for (j = 0; j < 6; j++) {
-    var c = colors[j];
+    const c = colors[j];
 
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       generatedColors = generatedColors.concat(c);
     }
   }

@@ -5,6 +5,7 @@ const WebGL = require("node-webgl");
 const initGL = require("./initGL");
 const initShaders = require("./initShaders");
 const initBuffers = require("./initBuffers");
+const initWireframeCubeBuffer = require("./initWireframeCubeBuffer");
 const initAntTweakBar = require("./initAntTweakBar");
 const initKeys = require("./initInput");
 const tick = require("./tick");
@@ -21,8 +22,26 @@ const log = console.log;
 
 const octree = new Octree();
 
+const entityTypes = ["terrain", "entity"].reduce((result, key, index) => {
+  result[key] = index;
+}, {});
+
+console.log("entityTypes", entityTypes);
+
+const terrainBlock = {
+  type: "terrain",
+  size: constants.worldSize / 2,
+  position: {
+    x: 0,
+    y: 0,
+    z: -(constants.worldSize / 4)
+  }
+};
+
+console.log("terrainBlock", terrainBlock);
+
 const createCube = ({ x, y, z }, octree) => {
-  const cube = { position: { x, y, z } };
+  const cube = { type: "entity", position: { x, y, z } };
   try {
     octree.insertEntity(cube);
   } catch (error) {
@@ -64,6 +83,7 @@ tick(
   gl,
   shaderProgram,
   initBuffers(gl, log),
+  initWireframeCubeBuffer(gl, log),
   vars,
   document.requestAnimationFrame,
   camera,

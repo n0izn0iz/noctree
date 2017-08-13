@@ -43,6 +43,7 @@ const tick = (
   gl,
   shaderProgram,
   cube,
+  wireframeCube,
   vars,
   requestAnimationFrame,
   camera,
@@ -50,7 +51,7 @@ const tick = (
   createCube,
   octree
 ) => {
-  drawScene(gl, shaderProgram, cube, vars, camera, octree);
+  drawScene(gl, shaderProgram, cube, wireframeCube, vars, camera, octree);
   animate(timeNow, vars);
 
   drawATB(ATB, gl, shaderProgram);
@@ -67,6 +68,7 @@ const tick = (
         gl,
         shaderProgram,
         cube,
+        wireframeCube,
         vars,
         requestAnimationFrame,
         camera,
