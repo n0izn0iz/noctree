@@ -4,7 +4,7 @@ const mat4 = geometry.mat4;
 import degToRad from "./degToRad";
 import setMatrixUniforms from "./setMatrixUniforms";
 
-module.exports = (
+export default (
   position,
   xRot,
   yRot,

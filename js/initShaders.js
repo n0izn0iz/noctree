@@ -1,7 +1,7 @@
 "use strict";
 import getShader from "./getShader";
 
-module.exports = (gl, log) => {
+export default (gl, log) => {
   log("init GL shaders");
   const fragmentShader = getShader(gl, "shader-fs");
   const vertexShader = getShader(gl, "shader-vs");

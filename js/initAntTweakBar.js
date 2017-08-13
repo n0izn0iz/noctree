@@ -1,7 +1,7 @@
 "use strict";
 import degToRad from "./degToRad";
 
-module.exports = (ATB, canvas, log, vars) => {
+export default (ATB, canvas, log, vars) => {
   log("init AntTweakBar");
 
   ATB.Init();

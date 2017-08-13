@@ -6,7 +6,7 @@ import Vector3 from "./Vector3";
 
 const convertVector = array => new Vector3(array[0], array[1], array[2]);
 
-module.exports = (inputState, { camera, createCube }) => {
+export default (inputState, { camera, createCube }) => {
   if (inputState.currentlyPressedKeys[keys.move.forward]) {
     camera.move(convertVector([0, speed, 0]));
   }

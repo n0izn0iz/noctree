@@ -3,7 +3,7 @@ import setMatrixUniforms from "./setMatrixUniforms";
 import geometry from "./glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
 
-module.exports = (
+export default (
   octree,
   cube,
   gl,

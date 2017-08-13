@@ -12,7 +12,7 @@
 -1,-1,-1________1,-1,-1
 4               7
 */
-module.exports = (gl, log) => {
+export default (gl, log) => {
   const cube = {};
   log("init Wireframe Cube Buffer");
 

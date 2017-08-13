@@ -190,4 +190,4 @@ class Octree {
   }
 }
 
-module.exports = Octree;
+export default Octree;

@@ -1,4 +1,4 @@
 "use strict";
-module.exports = degrees => {
+export default degrees => {
   return degrees * Math.PI / 180;
 };

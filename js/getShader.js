@@ -6,7 +6,7 @@ var shaders = {
   "shader-vs": fs.readFileSync(__dirname + "/../shaders/basic.vert").toString()
 };
 
-module.exports = (gl, id) => {
+export default (gl, id) => {
   if (!shaders.hasOwnProperty(id)) return null;
 
   let shader;

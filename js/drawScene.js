@@ -49,7 +49,7 @@ const renderers = {
     )
 };
 
-module.exports = ({ xRot, yRot, z }, octree, renderContext) => {
+export default ({ xRot, yRot, z }, octree, renderContext) => {
   const gl = renderContext.gl;
   gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);

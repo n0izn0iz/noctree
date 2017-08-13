@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (canvas, log) => {
+export default (canvas, log) => {
   let gl;
 
   log("init WebGL");

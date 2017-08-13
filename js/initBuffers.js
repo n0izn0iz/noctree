@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (gl, log) => {
+export default (gl, log) => {
   const cube = {};
   log("init GL buffers");
   const vertices = [

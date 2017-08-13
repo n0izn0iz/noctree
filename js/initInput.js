@@ -1,7 +1,7 @@
 "use strict";
 import GLFW from "node-glfw";
 
-module.exports = (document, gl, ATB, inputState) => {
+export default (document, gl, ATB, inputState) => {
   let firtTime = true;
   const eventHandlers = {
     resize: evt => {

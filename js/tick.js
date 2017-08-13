@@ -79,4 +79,4 @@ const tick = (
   );
 };
 
-module.exports = tick;
+export default tick;
