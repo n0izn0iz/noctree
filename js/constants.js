@@ -17,7 +17,7 @@ export const degQuarterCircle = degHalfCircle / 2;
 
 export default {
   defaultSize: 128,
-  maxEntitiesPerNode: 8,
-  minSize: 2,
+  maxEntitiesPerNode: 7,
+  minSize: 1,
   keys
 };

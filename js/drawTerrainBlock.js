@@ -8,8 +8,8 @@ export default (
   { gl, programs, models, perspectiveMatrix, cameraMatrix }
 ) => {
   const worldMatrix = mat4.create();
-  const cubeModelSize = 2;
-  const cube = models.wireframeCube;
+  const cubeModelSize = 1;
+  const cube = models.terrain;
   const shaderProgram = programs.basic;
 
   mat4.identity(worldMatrix);
@@ -58,7 +58,7 @@ export default (
   );
 
   gl.drawElements(
-    gl.LINES,
+    gl.TRIANGLES,
     cube.vertexIndexBuffer.numItems,
     gl.UNSIGNED_SHORT,
     0

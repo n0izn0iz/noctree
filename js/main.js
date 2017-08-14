@@ -18,6 +18,7 @@ import geometry from "./glMatrix-0.9.5.min.js";
 const vec3 = geometry.vec3;
 import degToRad from "./degToRad";
 import { getLookPoint, getLookVector } from "./getLookPoint";
+import initTerrainBuffer from "./initTerrainBuffer";
 
 console.log("entityTypes", entityTypes);
 
@@ -43,9 +44,11 @@ const state = {
 };
 
 const speed = 0.02;
+let count = 0;
 
 const actions = {
   createCube: (position, { octree, observer }) => {
+    count++;
     const placementDistance = 5;
     if (!position)
       position = getLookPoint(
@@ -57,6 +60,7 @@ const actions = {
     const cube = { type: entityTypes.cube, position };
     try {
       octree.insertEntity(cube);
+      console.log("Created cube #" + count);
     } catch (error) {
       console.warn("Failed to insert", cube, ":", error);
     }
@@ -135,7 +139,8 @@ const renderContext = {
   },
   models: {
     cube: initBuffers(gl),
-    wireframeCube: initWireframeCubeBuffer(gl)
+    wireframeCube: initWireframeCubeBuffer(gl),
+    terrain: initTerrainBuffer(gl)
   },
   renderers: {
     terrain: () => {},
@@ -157,19 +162,48 @@ const main = () =>
     document.requestAnimationFrame
   );
 
-const terrainBlock = {
-  type: entityTypes.terrain,
-  size: state.octree.size / 2,
-  position: {
-    x: -(state.octree.size / 4),
-    y: -(state.octree.size / 4),
-    z: -(state.octree.size / 4)
+const terrainBlocks = [
+  {
+    type: entityTypes.terrain,
+    size: state.octree.size / 2,
+    position: {
+      x: -(state.octree.size / 4),
+      y: -(state.octree.size / 4),
+      z: -(state.octree.size / 4)
+    }
+  },
+  {
+    type: entityTypes.terrain,
+    size: state.octree.size / 2,
+    position: {
+      x: state.octree.size / 4,
+      y: state.octree.size / 4,
+      z: -(state.octree.size / 4)
+    }
+  },
+  {
+    type: entityTypes.terrain,
+    size: state.octree.size / 2,
+    position: {
+      x: -(state.octree.size / 4),
+      y: state.octree.size / 4,
+      z: -(state.octree.size / 4)
+    }
+  },
+  {
+    type: entityTypes.terrain,
+    size: state.octree.size / 2,
+    position: {
+      x: state.octree.size / 4,
+      y: -(state.octree.size / 4),
+      z: -(state.octree.size / 4)
+    }
   }
-};
+];
 
-console.log("terrainBlock", terrainBlock);
+console.log("terrainBlocks", terrainBlocks);
 
-state.octree.insertEntity(terrainBlock);
+terrainBlocks.forEach(terrainBlock => state.octree.insertEntity(terrainBlock));
 
 actions.createCube({ x: 0, y: 0, z: 0 }, state);
 

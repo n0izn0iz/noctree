@@ -155,6 +155,7 @@ class Octree {
   }
 
   divide() {
+    console.log("Spliting octree");
     const octoArray = Array.apply(null, Array(octo));
 
     const childEntities = octoArray.map(() => []);

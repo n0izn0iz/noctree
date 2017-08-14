@@ -1,4 +1,5 @@
 "use strict";
+import { vertices, vertexNormals, wireframeVertexIndices } from "./cube";
 /*
 -1,1,1__________1,1,1
 3               2
@@ -15,42 +16,6 @@
 export default gl => {
   const cube = {};
   console.log("init Wireframe Cube Buffer");
-
-  const vertices = [
-    // Front face
-    -1.0,
-    -1.0,
-    1.0,
-
-    1.0,
-    -1.0,
-    1.0,
-
-    1.0,
-    1.0,
-    1.0,
-
-    -1.0,
-    1.0,
-    1.0,
-
-    // Back face
-    -1.0,
-    -1.0,
-    -1.0,
-
-    -1.0,
-    1.0,
-    -1.0,
-
-    1.0,
-    1.0,
-    -1.0,
-
-    1.0,
-    -1.0,
-    -1.0
-  ];
   cube.vertexPositionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertexPositionBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
@@ -81,48 +46,11 @@ export default gl => {
     gl.STATIC_DRAW
   );
 
-  cube.vertexIndices = [
-    0,
-    1,
-
-    1,
-    2,
-
-    2,
-    3,
-
-    3,
-    0,
-
-    4,
-    5,
-
-    5,
-    6,
-
-    6,
-    7,
-
-    7,
-    4,
-
-    0,
-    4,
-
-    1,
-    7,
-
-    2,
-    6,
-
-    3,
-    5
-  ];
   cube.vertexIndexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.vertexIndexBuffer);
   gl.bufferData(
     gl.ELEMENT_ARRAY_BUFFER,
-    new Uint16Array(cube.vertexIndices),
+    new Uint16Array(wireframeVertexIndices),
     gl.STATIC_DRAW
   );
   cube.vertexIndexBuffer.itemSize = 1;

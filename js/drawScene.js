@@ -27,7 +27,7 @@ export default (state, renderContext) => {
     45,
     gl.viewportWidth / gl.viewportHeight,
     0.1,
-    100.0,
+    1000.0,
     renderContext.perspectiveMatrix
   );
 

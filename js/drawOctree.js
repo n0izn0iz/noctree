@@ -10,7 +10,7 @@ export default (
   octree.forEachNode(node => {
     if (node.isLeaf() && (!node.entities || node.entities.length <= 0)) return;
     const worldMatrix = mat4.create();
-    const cubeModelSize = 2;
+    const cubeModelSize = 1;
     const cube = models.wireframeCube;
     const shaderProgram = programs.basic;
 

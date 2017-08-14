@@ -5,7 +5,7 @@
   "scripts": {
     "test": "node ./js/test.js",
     "install_node-glfw": "./scripts/install_node_glfw.sh",
-    "start": "babel-node ./js/main.js"
+    "start": "babel-node ./js/main.js 2>&1 | grep -v -e 'Ignoring Xlib error: error code '"
   },
   "author": "",
   "license": "ISC",
