@@ -2,6 +2,7 @@
 import setMatrixUniforms from "../setMatrixUniforms";
 import geometry from "../../utils/glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
+import drawModel from "./drawModel";
 
 export default (
   octree,
@@ -35,10 +36,6 @@ export default (
       0
     );
 
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.enable(gl.BLEND);
-    gl.disable(gl.DEPTH_TEST);
-
     gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertexColorBuffer);
     gl.vertexAttribPointer(
       shaderProgram.vertexColorAttribute,
@@ -58,6 +55,9 @@ export default (
       cameraMatrix,
       worldMatrix
     );
+
+    gl.disable(gl.BLEND);
+    gl.enable(gl.DEPTH_TEST);
 
     gl.drawElements(
       gl.LINES,

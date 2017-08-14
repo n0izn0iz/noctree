@@ -1,3 +1,4 @@
+"use strict";
 import entityTypes from "../utils/entityTypes";
 const speed = 0.02;
 import geometry from "../utils/glMatrix-0.9.5.min.js";

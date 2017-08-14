@@ -1,3 +1,4 @@
+"use strict";
 import initGL from "./initGL";
 import initAntTweakBar from "./initAntTweakBar";
 

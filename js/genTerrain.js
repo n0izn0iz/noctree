@@ -1,3 +1,4 @@
+"use strict";
 import entityTypes from "./utils/entityTypes";
 
 export default octree =>

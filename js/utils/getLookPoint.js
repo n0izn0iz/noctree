@@ -1,3 +1,4 @@
+"use strict";
 import geometry from "./glMatrix-0.9.5.min.js";
 const vec3 = geometry.vec3;
 import degToRad from "./degToRad";

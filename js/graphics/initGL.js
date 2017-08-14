@@ -7,7 +7,7 @@ export default canvas => {
   gl.viewportWidth = canvas.width;
   gl.viewportHeight = canvas.height;
   gl.disable(gl.CULL_FACE);
-  gl.clearColor(255, 0, 0, 1);
+  gl.clearColor(0, 191, 255, 1);
   gl.enable(gl.DEPTH_TEST);
   return gl;
 };

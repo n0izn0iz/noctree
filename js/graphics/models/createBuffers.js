@@ -1,3 +1,4 @@
+"use strict";
 const createGLBuffer = (gl, array, itemSize, bindType, ArrayType) => {
   const gLBuffer = gl.createBuffer();
   gl.bindBuffer(bindType, gLBuffer);

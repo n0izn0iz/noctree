@@ -1,3 +1,4 @@
+"use strict";
 const entityTypes = ["terrain", "cube"];
 
 export default entityTypes.reduce(
