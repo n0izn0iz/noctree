@@ -1,6 +1,6 @@
 "use strict";
-import drawScene from "./drawScene";
-import handleKeys from "./handleKeys";
+import drawScene from "./graphics/renderers/drawScene";
+import handleKeys from "./input/handleKeys";
 
 const animate = (timeNow, state) => {
   if (!timeNow) return; // first time, timeNow may be undefined

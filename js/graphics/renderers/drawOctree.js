@@ -1,6 +1,6 @@
 "use strict";
-import setMatrixUniforms from "./setMatrixUniforms";
-import geometry from "./glMatrix-0.9.5.min.js";
+import setMatrixUniforms from "../setMatrixUniforms";
+import geometry from "../../utils/glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
 
 export default (
@@ -39,7 +39,7 @@ export default (
     gl.enable(gl.BLEND);
     gl.disable(gl.DEPTH_TEST);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, cube.verticesColorBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertexColorBuffer);
     gl.vertexAttribPointer(
       shaderProgram.vertexColorAttribute,
       4,

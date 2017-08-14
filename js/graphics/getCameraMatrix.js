@@ -1,6 +1,6 @@
 "use strict";
-import degToRad from "./degToRad";
-import geometry from "./glMatrix-0.9.5.min.js";
+import degToRad from "../utils/degToRad";
+import geometry from "../utils/glMatrix-0.9.5.min.js";
 /*
   +90 theta
    |
@@ -8,7 +8,7 @@ ___|___ +90 phi
    0
 */
 
-import { degCircle, degHalfCircle, degQuarterCircle } from "./constants";
+import { degCircle, degHalfCircle, degQuarterCircle } from "../utils/constants";
 
 const vec3 = geometry.vec3;
 const mat4 = geometry.mat4;

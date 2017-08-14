@@ -1,11 +1,11 @@
 "use strict";
 import drawCube from "./drawCube";
 import drawOctree from "./drawOctree";
-import geometry from "./glMatrix-0.9.5.min.js";
+import geometry from "../../utils/glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
-import entityTypes from "./entityTypes";
+import entityTypes from "../../utils/entityTypes";
 import drawTerrainBlock from "./drawTerrainBlock";
-import { getCameraMatrix } from "./Camera";
+import { getCameraMatrix } from "../getCameraMatrix";
 
 const renderers = {
   [entityTypes.terrain]: drawTerrainBlock,

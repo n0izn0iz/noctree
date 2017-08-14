@@ -1,5 +1,5 @@
 "use strict";
-import degToRad from "./degToRad";
+import degToRad from "../utils/degToRad";
 
 export default (ATB, canvas, vars) => {
   console.log("init AntTweakBar");

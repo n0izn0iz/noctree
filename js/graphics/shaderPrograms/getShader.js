@@ -2,8 +2,12 @@
 import fs from "fs";
 
 var shaders = {
-  "shader-fs": fs.readFileSync(__dirname + "/../shaders/basic.frag").toString(),
-  "shader-vs": fs.readFileSync(__dirname + "/../shaders/basic.vert").toString()
+  "shader-fs": fs
+    .readFileSync(__dirname + "/../../../shaders/basic.frag")
+    .toString(),
+  "shader-vs": fs
+    .readFileSync(__dirname + "/../../../shaders/basic.vert")
+    .toString()
 };
 
 export default (gl, id) => {

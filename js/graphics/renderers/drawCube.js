@@ -1,27 +1,24 @@
 "use strict";
-import setMatrixUniforms from "./setMatrixUniforms";
-import geometry from "./glMatrix-0.9.5.min.js";
+import geometry from "../../utils/glMatrix-0.9.5.min.js";
 const mat4 = geometry.mat4;
+import degToRad from "../../utils/degToRad";
+import setMatrixUniforms from "../setMatrixUniforms";
 
 export default (
-  terrain,
-  { gl, programs, models, perspectiveMatrix, cameraMatrix }
+  { position },
+  { gl, programs, models, cameraMatrix, perspectiveMatrix },
+  { xRot, yRot }
 ) => {
   const worldMatrix = mat4.create();
-  const cubeModelSize = 1;
-  const cube = models.terrain;
   const shaderProgram = programs.basic;
+  const cube = models.cube;
 
   mat4.identity(worldMatrix);
 
-  mat4.translate(worldMatrix, [
-    terrain.position.x,
-    terrain.position.y,
-    terrain.position.z
-  ]);
+  mat4.translate(worldMatrix, [position.x, position.y, position.z]);
 
-  const scaleSize = terrain.size / cubeModelSize;
-  mat4.scale(worldMatrix, [scaleSize, scaleSize, scaleSize]);
+  mat4.rotate(worldMatrix, degToRad(xRot), [1, 0, 0]);
+  mat4.rotate(worldMatrix, degToRad(yRot), [0, 1, 0]);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertexPositionBuffer);
   gl.vertexAttribPointer(
@@ -37,10 +34,10 @@ export default (
   gl.enable(gl.BLEND);
   gl.disable(gl.DEPTH_TEST);
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, cube.verticesColorBuffer);
+  gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertexColorBuffer);
   gl.vertexAttribPointer(
     shaderProgram.vertexColorAttribute,
-    4,
+    cube.vertexColorBuffer.itemSize,
     gl.FLOAT,
     false,
     0,

@@ -1,8 +1,8 @@
 "use strict";
-import { keys } from "./constants";
+import { keys } from "../utils/constants";
 const mouseSpeed = 0.1;
-import Vector3 from "./Vector3";
-import getLookPoint from "./getLookPoint";
+import Vector3 from "../utils/Vector3";
+import getLookPoint from "../utils/getLookPoint";
 
 const convertVector = array => new Vector3(array[0], array[1], array[2]);
 

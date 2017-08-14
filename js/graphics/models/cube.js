@@ -1,3 +1,17 @@
+/*
+-1,1,1__________1,1,1
+3               2
+|       top     |
+-1,-1,1_________1,-1,1
+0               1
+|               |
+-1,1,-1_________1,1,-1
+5               6
+|    bottom     |
+-1,-1,-1________1,-1,-1
+4               7
+*/
+
 export const vertices = [
   // Front face
   -1.0,
@@ -246,3 +260,27 @@ export const wireframeVertexIndices = [
   3,
   5
 ];
+
+const numberOfFaces = 6;
+const compPerColor = 4;
+
+export const generateColors = colors => {
+  if (!(colors instanceof Array))
+    throw new TypeError("colors should be an array");
+  if (colors.length === 0) throw new TypeError("colors should not be empty");
+  if (!(colors[0] instanceof Array)) {
+    const color = colors;
+    colors = [];
+    for (let i = 0; i < numberOfFaces; i++) colors.push(color);
+  }
+  if (colors.length !== 6)
+    throw new TypeError("colors should be and array of 6 colors or a color");
+  let generatedColors = [];
+  for (let j = 0; j < 6; j++) {
+    const c = colors[j];
+    for (let i = 0; i < 4; i++) {
+      generatedColors = generatedColors.concat(c);
+    }
+  }
+  return generatedColors;
+};
