@@ -10,13 +10,8 @@ export default (
   { xRot, yRot }
 ) => {
   const worldMatrix = mat4.create();
-  const shaderProgram = programs.basic;
-  const cube = models.cube;
-
   mat4.identity(worldMatrix);
-
   mat4.translate(worldMatrix, [position.x, position.y, position.z]);
-
   mat4.rotate(worldMatrix, degToRad(xRot), [1, 0, 0]);
   mat4.rotate(worldMatrix, degToRad(yRot), [0, 1, 0]);
 
