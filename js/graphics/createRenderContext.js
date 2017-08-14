@@ -14,7 +14,7 @@ export default (document, state) => {
   const canvas = document.createElement("cube-canvas");
   const gl = initGL(canvas);
   const ATB = document.AntTweakBar;
-  const twbar = initAntTweakBar(ATB, canvas, state);
+  initAntTweakBar(ATB, canvas, state);
   const renderContext = {
     gl,
     ATB,

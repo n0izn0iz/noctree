@@ -1,6 +1,8 @@
 "use strict";
 import degToRad from "../utils/degToRad";
 
+var twBar;
+
 export default (ATB, canvas, vars) => {
   console.log("init AntTweakBar");
 
@@ -10,7 +12,7 @@ export default (ATB, canvas, vars) => {
   ); // Message added to the help bar.
   ATB.WindowSize(canvas.width, canvas.height);
 
-  const twBar = ATB.NewBar("Cube");
+  twBar = ATB.NewBar("Cube");
   twBar.AddVar(
     "z",
     ATB.TYPE_FLOAT,
