@@ -59,9 +59,11 @@ class Vector3 {
     return this.dividedByScalar(this.length());
   }
 
-  /*toString() {
-    return "Vector3{x: " + this.x + ",y: " + this.y + ",z: " + this.z + "}";
-  }*/
+  toString() {
+    return (
+      "Vector3 { x: " + this.x + ", y: " + this.y + ", z: " + this.z + " }"
+    );
+  }
 }
 
 export default Vector3;

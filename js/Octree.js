@@ -80,17 +80,17 @@ childVectors.forEach((vector, index) => {
   console.log("childVec", directionStrings[index], vector);
 });
 
-const outOfBound = (value, position, size) =>
-  value < position - size || value >= position + size;
+const outOfBound = (value, position, halfSize) =>
+  value < position - halfSize || value >= position + halfSize;
 
-const isOutOfBounds = (point, position, size) =>
-  outOfBound(point.x, position.x, size) ||
-  outOfBound(point.y, position.y, size) ||
-  outOfBound(point.z, position.z, size);
+const isOutOfBounds = (point, position, halfSize) =>
+  outOfBound(point.x, position.x, halfSize) ||
+  outOfBound(point.y, position.y, halfSize) ||
+  outOfBound(point.z, position.z, halfSize);
 
 class Octree {
   constructor(
-    { parent, direction } = {
+    { parent, direction, entities } = {
       parent: null,
       direction: null
     }
@@ -101,32 +101,37 @@ class Octree {
       this.size = parent.halfSize; // the cube is size*size*size
     else this.size = constants.defaultSize;
     if (this.size < constants.minSize)
-      throw "Size too small (" + size + "/" + constants.minSize + ")";
+      throw "Can't construct Octree, size too small (" +
+        this.size +
+        "/" +
+        constants.minSize +
+        ")";
     this.parent = parent; // create root by default
     this.position = parent ? parent.getChildPosition(direction) : new Vector3(); // center of the cube
     this.entities = [];
     this.childs = null;
     this.halfSize = this.size / 2;
+    if (entities) entities.forEach(entity => this.insertEntity(entity));
+  }
+
+  findOctant(point) {
+    for (let direction = 0; direction < octo; direction++)
+      if (this.pointIsInOctant(point, direction)) return direction;
+    throw "Failed to find octant for " +
+      new Vector3(point).toString() +
+      " at " +
+      new Vector3(this.position).toString();
   }
 
   insertEntity(entity) {
-    if (this.isOutOfBounds(entity.position)) throw "Out of bounds";
+    if (this.isOutOfBounds(entity.position))
+      throw "Out of bounds at " + new Vector3(entity.position).toString();
     if (this.isLeaf()) {
       this.entities.push(entity);
-      /*if (this.size / 2 >= constants.minSize)*/ this.checkDivide();
+      if (this.size / 2 >= constants.minSize) this.checkDivide();
     } else {
-      let lastError = "Unknown error";
-      let i;
-      for (i = 0; i < this.childs.length; i++) {
-        try {
-          this.childs[i].insertEntity(entity);
-          break;
-        } catch (error) {
-          lastError = error;
-        }
-      }
-      if (i === this.childs.length)
-        throw "Failed to pass entity, last error: " + lastError;
+      const direction = this.findOctant(entity.position);
+      this.childs[direction].insertEntity(entity);
     }
   }
 
@@ -150,20 +155,23 @@ class Octree {
   }
 
   divide() {
-    let lastError = "Unknown error";
-    this.childs = Array.apply(null, Array(octo)).map((element, direction) => {
-      const child = new Octree({
-        parent: this,
-        direction: direction
-      });
-      lastError = this.passEntities(direction, child);
-      return child;
+    const octoArray = Array.apply(null, Array(octo));
+
+    const childEntities = octoArray.map(() => []);
+    this.entities.forEach((entity, index) => {
+      const direction = this.findOctant(entity.position);
+      childEntities[direction].push(entity);
     });
-    if (this.childs.length <= 0)
-      throw "Failed to divide, last error" + lastError;
-    else if (this.entities.length > 0)
-      throw "Failed to pass entity/ies to childs, last error: " + lastError;
-    else this.entities = null;
+    this.entities = null;
+
+    this.childs = octoArray.map(
+      (element, direction) =>
+        new Octree({
+          parent: this,
+          direction,
+          entities: childEntities[direction]
+        })
+    );
   }
 
   isRoot() {
@@ -174,21 +182,16 @@ class Octree {
     return this.childs === null;
   }
 
-  isOutOfBounds(point) {
-    return isOutOfBounds(point, this.position, this.halfSize);
+  pointIsInOctant(point, direction) {
+    return !isOutOfBounds(
+      point,
+      this.getChildPosition(direction),
+      this.halfSize / 2
+    );
   }
 
-  passEntities(direction, node) {
-    let lastError = "Unknown error";
-    this.entities.forEach((entity, index) => {
-      try {
-        this.entities.splice(this.entities.indexOf(entity), 1);
-        node.insertEntity(entity);
-      } catch (error) {
-        lastError = error;
-      }
-    });
-    return lastError;
+  isOutOfBounds(point) {
+    return isOutOfBounds(point, this.position, this.halfSize);
   }
 
   getChildPosition(direction) {

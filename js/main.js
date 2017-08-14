@@ -58,7 +58,7 @@ const actions = {
     try {
       octree.insertEntity(cube);
     } catch (error) {
-      console.warn("Failed to insert entity:", error);
+      console.warn("Failed to insert", cube, ":", error);
     }
   },
   moveObserver: (controlVector, { observer }) => {
